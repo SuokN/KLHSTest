@@ -1,28 +1,22 @@
-import { StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import TodoList from "./components/TodoList/TodoList";
-import SendSettings from "./components/Settings/SendSettings";
+import Tabs from "./Tabs"
+import {configureStore} from "@reduxjs/toolkit"
+import {todosReducer} from "./reducers/todosReducer";
+import {settingsReducer} from "./reducers/settingsReducer";
+import {Provider} from "react-redux";
+import { combineReducers } from 'redux'
 
+const reducer = combineReducers({
+    todos: todosReducer,
+    settings: settingsReducer,
+})
 
-const Tab = createBottomTabNavigator();
+const App = () => {
+    const store = configureStore({reducer,});
 
-export default function App() {
     return (
-        <NavigationContainer>
-            <Tab.Navigator>
-                <Tab.Screen name="TODO" component={TodoList}/>
-                <Tab.Screen name="Settings" component={SendSettings}/>
-            </Tab.Navigator>
-        </NavigationContainer>
-    );
+        <Provider store={store}>
+            <Tabs />
+        </Provider>
+    )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;

@@ -1,48 +1,46 @@
-import {Text, View} from "react-native";
+import {StyleSheet, Text, View} from "react-native";
 import Checkbox from "expo-checkbox";
 import React from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {saveSettings} from "../../actions/settings";
 
 const SendSettings = ()  => {
-    const data = [
-        { id: 1, text: 'SMS', isChecked: false },
-        { id: 2, text: 'Push', isChecked: false },
-        { id: 3, text: 'Email', isChecked: false },
-    ]
-    const [settingsData, setSend] = React.useState(data);
 
-    const handleChange = (id) => {
-        console.log(settingsData)
-        const temp = settingsData.map((item) => {
-            if (id === item.id) {
-                return {...item, isChecked: !item.isChecked }
-            }
-            return item;
-        });
-        console.log(temp)
-        setSend(temp);
+    const dispatch = useDispatch()
+    const settings = useSelector(state => state.settings.items)
+
+    const handleChange = (id, text, isChecked) => {
+        dispatch(saveSettings({id: id, text: text, isChecked: !isChecked}))
     };
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Settings!</Text>
-            {settingsData.map((item, index) => {
+        <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'flex-start' }}>
+            {settings.map((item, index) => {
                 return <View key={index + 10}
                     style={{
                         flexDirection: 'row',
-                        flex: 1,
-                        justifyContent: 'space-between',
                     }}>
-                    <Checkbox key={index +20}
+                    <Checkbox style={styles.checkbox} key={index +20}
                         value={item.isChecked}
                               onValueChange={() => {
-                            console.log(item)
-                            handleChange(item.id);
+                            handleChange(item.id, item.text, item.isChecked);
                         }}
                     />
-                    <Text key={index}>{item.text}</Text>
+                    <Text key={index} style={styles.paragraph}>{item.text}</Text>
                 </View>
             })}
         </View>
     );
 }
+const styles = StyleSheet.create({
+    paragraph: {
+        fontSize: 15,
+        padding: 10,
+    },
+    checkbox: {
+        alignSelf: 'center',
+        padding: 10,
+        margin: 5,
+    },
+});
 export default SendSettings
