@@ -4,10 +4,9 @@ import TodoList from "./components/TodoList/TodoList";
 import SendSettings from "./components/Settings/SendSettings";
 import { TODOS, Settings } from "./constants/commonConstants";
 import { useSelector} from "react-redux";
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Tab = createBottomTabNavigator();
-import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function Tabs() {
     const todos = useSelector(state => state.todos.items)

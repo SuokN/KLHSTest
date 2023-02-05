@@ -1,3 +1,4 @@
+//Settings Tab
 import {StyleSheet, Text, View} from "react-native";
 import Checkbox from "expo-checkbox";
 import React from "react";
@@ -9,12 +10,13 @@ const SendSettings = ()  => {
     const dispatch = useDispatch()
     const settings = useSelector(state => state.settings.items)
 
+    //update setting
     const handleChange = (id, text, isChecked) => {
         dispatch(saveSettings({id: id, text: text, isChecked: !isChecked}))
     };
 
     return (
-        <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'flex-start' }}>
+        <View style={styles.container}>
             {settings.map((item, index) => {
                 return <View key={index + 10}
                     style={{
@@ -33,6 +35,11 @@ const SendSettings = ()  => {
     );
 }
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start'
+    },
     paragraph: {
         fontSize: 15,
         padding: 10,

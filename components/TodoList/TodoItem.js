@@ -1,3 +1,4 @@
+// to do item: checkbox(isReady), text and delete
 import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import Checkbox from "expo-checkbox";
 import React from "react";
@@ -7,9 +8,11 @@ import {deleteTodo, updateTodo} from "../../actions/todos";
 const TodoItem = ({id, text, isReady}) => {
     const dispatch = useDispatch()
 
+    //update to do is ready
     const itemReady = (value) =>{
         dispatch(updateTodo({id: id, text: text, isReady: value}))
     }
+    //delete to do
     const onDelete = () => {
         dispatch(deleteTodo({id}))
     }

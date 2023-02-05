@@ -1,3 +1,4 @@
+// To do tab
 import { View, TextInput, TouchableOpacity, Image, StyleSheet, SafeAreaView, ScrollView} from "react-native";
 import React from "react";
 import TodoItem from "./TodoItem";
@@ -6,14 +7,16 @@ import {addTodo } from "../../actions/todos";
 
 const TodoList = () => {
     const [count, setCount] = React.useState(0)
+    const [text, setText] = React.useState('TODO: ');
 
     const dispatch = useDispatch()
     const todos = useSelector(state => state.todos.items)
 
-    const [text, onChangeText] = React.useState('TODO: ');
+    // add new to do
     const onPress = () => {
         const unChecked = false
         dispatch(addTodo({id: count, text: text, isReady: unChecked}))
+        setText('TODO: ')
         setCount(prevCount => prevCount + 1)
        };
 
@@ -32,7 +35,7 @@ const TodoList = () => {
             <TextInput editable multiline numberOfLines={4}
                 maxLength={300}
                 style={styles.input}
-                onChangeText={onChangeText}
+                onChangeText={setText}
                 value={text}
             />
             </View>
